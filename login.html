@@ -48,18 +48,16 @@
 
        			const xhr  = new XMLHttpRequest();
 
-       			xhr.onload = function () {
+       			xhr.onreadystatechange = function () {
 
+                               if (this.readyState == 4 && this.status == 200) {
        				var responseObject = JSON.parse(this.responseText);
-
-       				alert(responseObject.ok);
+       				alert(responseObject.msg);
        				
-
        				if(responseObject.ok)
 
-       				{   alert("verified");     
+       				{   
                                                      
-
                                           if(rmCheck.checked)
                                           {
                                                  setCookie("username", name, 1);
@@ -71,6 +69,12 @@
 
        				}
 
+                            }
+
+                                 else if(this.readyState == 4 && this.status == 404)
+                            {
+                                   alert("Error- status code:404 (Resource unavailable)");
+                            }
 
        				
        			};
