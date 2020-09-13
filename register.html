@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Register Page</title>
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+	<div>
+      <div class="registerform">
+		<form class="rform" method = "post">
+			
+			<input id="username" type="text" class="inputvalues" placeholder="Username:" required /> <br>
+			
+			<input id="password" type="password" class="inputvalues" placeholder="Password:" required/> <br>
+			<input id="cpassword" type="password" class="inputvalues" placeholder="Confirm Password:" required/> <br>
+			<input name = "submit_btn" type="button" onclick="callregister()" id="register_btn" value="Register"/><br>
+			<a href ="login.html"><input type="button" id="back_btn" value="Back To Login Page"/></a>
+
+		</form>	
+       </div>
+
+       <script type="text/javascript">
+       	
+       		function callregister() {
+
+
+       			var name = document.getElementById("username").value;
+       			var pass = document.getElementById("password").value;
+       			var cpass = document.getElementById("cpassword").value;
+       			var n = name.length;
+
+
+       			if(name.length == 0 || pass.length == 0 || cpass.length == 0 )
+       			{
+       				alert("Fill all the fields");
+       			}
+
+       		else
+       		{
+       		     if(name.indexOf(' ') >= 0)
+                {
+                      alert('Username should not contain whitespaces');
+
+               }
+
+
+
+               else if(pass.length < 8 )
+               {
+               	  alert('Password must have minimum 8 characters');
+               }
+
+               else if(!/\d/.test(pass))
+               {
+               		alert('Password must contain atleast one number');
+               }
+
+               else if( !/\D/.test(pass) && /\w/.test(pass) )
+               {
+               		alert('Password must contain atleast one character');
+               }
+
+
+
+       			else
+       			{
+
+
+       			const xhr  = new XMLHttpRequest();
+
+       			xhr.onload = function () {
+
+       				let respobj = JSON.parse(xhr.responseText);
+
+       				alert(respobj.msg);
+
+       				
+       			};
+
+       			xhr.open('post','register.php');
+       			xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+
+       			var data = 'username=' + name + '&password=' + pass + '&cpassword=' + cpass;
+
+       			xhr.send(data);
+       		}
+
+		}
+
+
+
+
+       		};
+
+       </script>
+		
+
+</body>
+</html>
