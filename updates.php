@@ -3,7 +3,7 @@
     error_reporting(0);
 
 
-    $sender = $_POST['sendername'];
+    $sender = $_GET['sendername'];
   
 
     $query = "SELECT message,id,receiver_id,msgtime from updates_table WHERE (id = ? ) OR (receiver_id = ?)";
