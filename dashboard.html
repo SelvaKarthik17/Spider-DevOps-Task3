@@ -111,12 +111,11 @@
        				
        			};
 
-       			xhr.open('post','updates.php');
-       			xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded');
-
        			var data = 'sendername=' + name;
+       			xhr.open('get','updates.php?'+data);
 
-       			xhr.send(data);
+
+       			xhr.send();
        		}
 
 
