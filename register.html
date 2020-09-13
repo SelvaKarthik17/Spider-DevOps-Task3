@@ -70,11 +70,16 @@
 
        			const xhr  = new XMLHttpRequest();
 
-       			xhr.onload = function () {
-
+       			xhr.onreadystatechange = function () {
+       			  if (this.readyState == 4 && this.status == 200) {
        				let respobj = JSON.parse(xhr.responseText);
-
        				alert(respobj.msg);
+       			}
+
+       			else if(this.readyState == 4 && this.status == 404)
+       			{
+       				alert("Error- status code:404 (Resource unavailable)");
+       			}
 
        				
        			};
