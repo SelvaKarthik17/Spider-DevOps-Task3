@@ -1,0 +1,155 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Dashboard</title>
+
+	<style type="text/css">
+		
+	</style>
+</head>
+
+<body>
+
+<div>
+	<input type="text" id="unr" placeholder="user"><br>
+	<input type="text" id="msg" placeholder="message"><br>
+
+	<input type="button" onclick="msg_send()" value="Send">
+	<input type="button" onclick="logout()" value="logout">
+
+</div>
+
+<div id="messages">
+	
+
+
+</div>
+
+
+<script type="text/javascript">
+
+
+			var name = sessionStorage.getItem("uid");
+
+
+
+
+			if(name == "null" || name.length == 0)
+			{
+	
+				name = getCookie("username");
+			
+
+				if(name != null && name.length != 0)
+				{
+					
+					//alert(name.length);
+					//console.log(name.length);
+				}
+
+				else
+				{
+					window.location.href = 'login.html';
+				}
+
+			}
+
+
+			function msg_send()
+				{
+
+       			var recvname = document.getElementById("unr").value;
+       			var msg = document.getElementById("msg").value;
+
+
+       			if(recvname.length == 0 || msg.length == 0)
+       			{
+       				alert("Fill all the fields");
+       			}
+
+       			else
+       			{
+
+
+       			const xhr  = new XMLHttpRequest();
+
+       			xhr.onload = function () {
+
+       				//alert(xhr.responseText);
+       				
+       			};
+
+       			xhr.open('post','send.php');
+       			xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+
+       			var data = 'sendername=' + name + '&recvname=' + recvname + '&msg=' + msg ;
+
+       			xhr.send(data);
+       		}
+
+				}	
+
+
+
+
+	           	setInterval(updater,250);
+           	function updater()
+
+           	{	
+
+       			var msg = document.getElementById("messages");
+       			
+
+       			const xhr  = new XMLHttpRequest();
+
+       			xhr.onload = function () {
+
+       				console.log(this.responseText);
+
+       				msg.innerHTML = this.responseText;
+       				
+       			};
+
+       			xhr.open('post','updates.php');
+       			xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+
+       			var data = 'sendername=' + name;
+
+       			xhr.send(data);
+       		}
+
+
+       		function logout()
+       		{
+
+       			sessionStorage.removeItem("uid");
+       			window.location.href = 'login.html';
+
+
+       		}
+
+
+
+function getCookie(cname) {
+  var name = cname + "=";
+  var ca = document.cookie.split(';');
+  for(var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+
+           
+</script>
+
+
+</body>
+</html>
