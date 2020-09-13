@@ -6,3 +6,7 @@ The ".htaccess" file has configurations related to apache2 server and has to be 
 
 Import the "devops.sql" file into MySql database associated with the server
 
+"corona.html" will be the default page when “http://localhost/" is opened
+
+Go to "http://localhost/register.html" to register the user and begin with application
+
