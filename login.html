@@ -1,0 +1,110 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Login Page</title>
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+	<div>
+       <div class="registerform">
+		<form class="rform" action = "login.php" method = "post">
+			<input id="username" type="text" class="inputvalues" placeholder="Username:"/> <br>
+			<input id="password" type="Password" class="inputvalues" placeholder="Password:"/> <br>
+
+                     <input type="checkbox" id="rememberMe" > <label for="rememberMe">Remember me</label>
+
+			<input name="login" type="button" onclick="call_login()" id="login_btn" value="login"/><br>
+
+			<a href="register.html"><input type="button" id="back_btn" value="Go to registration page"/></a>
+		</form>	
+       </div>
+
+              <script type="text/javascript">
+       	
+              const rmCheck = document.getElementById("rememberMe");
+
+
+
+       		function call_login() {
+
+
+                            var name = document.getElementById("username").value;
+                            var pass = document.getElementById("password").value;
+
+
+
+       		      if(name.length == 0 || pass.length == 0)
+       		      {
+       				alert("Fill all the fields");
+       		      }
+
+                      
+
+       			else
+       			{
+
+
+       			const xhr  = new XMLHttpRequest();
+
+       			xhr.onload = function () {
+
+       				var responseObject = JSON.parse(this.responseText);
+
+       				alert(responseObject.ok);
+       				
+
+       				if(responseObject.ok)
+
+       				{   alert("verified");     
+                                                     
+
+                                          if(rmCheck.checked)
+                                          {
+                                                 setCookie("username", name, 1);
+
+                                          }
+
+                                          sessionStorage.setItem("uid", name);
+                                          window.location.href = 'dashboard.html';
+
+       				}
+
+
+       				
+       			};
+
+       			xhr.open('post','login.php');
+       			xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+
+       			var data = 'username=' + name + '&password=' + pass ;
+
+       			xhr.send(data);
+       		}
+
+             
+
+       		};
+
+                     
+
+
+function setCookie(cname, cvalue, exdays) {
+  var d = new Date();
+  d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+  var expires = "expires="+d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+
+
+
+
+       </script>
+            
+
+		
+	</div>	
+</body>
+</html>
